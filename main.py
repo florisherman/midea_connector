@@ -70,15 +70,18 @@ async def publish_to_mqtt(data):
 
 
 async def write_config(device):
-    logging.debug("In write_config function.")
-    settings = Settings(
-        deviceId=device.id,
-        deviceIp=device.ip,
-        deviceToken=device.token,
-        deviceKey=device.key
-    )
-    with open(CONFIG_PATH, "w") as f:
-        json.dump(settings.__dict__, f)
+    try:
+        logging.debug("In write_config function.")
+        settings = Settings(
+            deviceId=device.id,
+            deviceIp=device.ip,
+            deviceToken=device.token,
+            deviceKey=device.key
+        )
+        with open(CONFIG_PATH, "w") as f:
+            json.dump(settings.__dict__, f)
+    except Exception as e:
+        logging.error(f"Error writing file: {str(e)}")
 
 
 async def read_config():
@@ -156,7 +159,7 @@ async def main():
         logging.info("Publish_to_mqtt device info.")
         # Publish DeviceInfo object to MQTT topic
         await publish_to_mqtt(data)
-        
+
         # Check if it's time to re-authenticate
         current_time = asyncio.get_event_loop().time()
         logging.debug(F"Check if it's time to re-authenticate = {current_time >= next_reauth_time}")
