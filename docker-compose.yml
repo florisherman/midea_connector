@@ -1,11 +1,11 @@
 version: '3'
 services:
-  your_app_name:
+  mideaConnector:
     build:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - ./data:/data
+      - ./data:/app/data
     environment:
       - DEVICE_IP=*
       - CONFIG_PATH=device.json
@@ -17,3 +17,7 @@ services:
       - MQTT_PASSWORD=*
       - LOG_LEVEL=DEBUG  # Set log level here (e.g., DEBUG, INFO, ERROR)
     restart: always  # Restart the container automatically if it exits
+
+networks:
+  default:
+    name: doitnetwork
