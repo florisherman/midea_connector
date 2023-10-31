@@ -46,3 +46,7 @@ The application provides logging for different levels of information (DEBUG, INF
 ## Acknowledgments
 
 - This project uses the library of https://github.com/mill1000/midea-msmart
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
