@@ -7,6 +7,7 @@ WORKDIR /app
 COPY . /app
 
 # Install required packages
+RUN pip install --no-cache-dir msmart-ng
 RUN pip install --no-cache-dir paho-mqtt
 
 # Run your script when the container launches
