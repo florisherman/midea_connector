@@ -5,13 +5,13 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      - DEVICE_IP=192.168.1.15
+      - DEVICE_IP=*
       - CONFIG_PATH=device.json
       - DUMP_PATH=acDump.json
-      - MQTT_BROKER=192.168.1.51
+      - MQTT_BROKER=*
       - MQTT_PORT=1883
       - MQTT_TOPIC=aircons/office/info_dump
-      - MQTT_USERNAME=user1
-      - MQTT_PASSWORD=Password1
+      - MQTT_USERNAME=*
+      - MQTT_PASSWORD=*
       - LOG_LEVEL=DEBUG  # Set log level here (e.g., DEBUG, INFO, ERROR)
     restart: always  # Restart the container automatically if it exits
