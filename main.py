@@ -102,13 +102,11 @@ async def read_config():
         await write_config(device)
         return settings
 
-
 async def get_device():
     logging.debug("In get_device function.")
     device = await Discover.discover_single(DEVICE_IP)
     await write_config(device)
     return device
-
 
 async def auth_device(ac_settings: Settings):
     logging.debug("In auth_device function.")
@@ -143,7 +141,6 @@ async def get_device_info(device):
     )
 
 async def main():
-
     Path('data').mkdir(parents=True, exist_ok=True)
     logging.debug("Starting application main.")
     device = await authenticate_device()
@@ -158,7 +155,6 @@ async def main():
         logging.info("Publish_to_mqtt device info.")
         # Publish DeviceInfo object to MQTT topic
         await publish_to_mqtt(data)
-
         # Check if it's time to re-authenticate
         current_time = asyncio.get_event_loop().time()
         logging.debug(F"Check if it's time to re-authenticate = {current_time >= next_reauth_time}")
@@ -173,5 +169,7 @@ async def main():
             break
 
 if __name__ == "__main__":
-    asyncio.run(main())
-
+    try:
+        asyncio.run(main())
+    except Exception as e:
+        logging.error(f"Error in main app function: {str(e)}")
