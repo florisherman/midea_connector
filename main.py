@@ -105,7 +105,10 @@ async def read_config():
 async def get_device():
     logging.debug("In get_device function.")
     device = await Discover.discover_single(DEVICE_IP)
-    await write_config(device)
+    if device.id:
+        await write_config(device)
+    else:
+        logging.error("Could not discover device.")
     return device
 
 async def auth_device(ac_settings: Settings):
