@@ -7,10 +7,20 @@ from msmart.discover import Discover
 from acSettings import Settings
 from deviceInfo import DeviceInfo
 import paho.mqtt.client as mqtt
-
+import signal
+import sys
 from pathlib import Path
 #creating a new directory called pythondirectory
 
+def handle_sigterm(signum, frame):
+    print("Received SIGTERM. Initiating cancellation...")
+    cancel()
+    sys.exit(0)
+
+# Register the SIGTERM signal handler
+signal.signal(signal.SIGTERM, handle_sigterm)
+
+is_cancelled = False
 
 LOG_LEVEL = os.environ.get("LOG_LEVEL", "DEBUG").upper()
 logging.basicConfig(level=LOG_LEVEL, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -29,6 +39,10 @@ MQTT_PASSWORD = os.environ.get("MQTT_PASSWORD", "Password1")
 # Constants for authentication time and sleep time (in seconds)
 REAUTH_INTERVAL = 30 * 60  # Re-authenticate every 30 minutes
 SLEEP_INTERVAL = 60  # Sleep for 60 seconds between data retrieval and publication
+
+def cancel():
+    global is_cancelled
+    is_cancelled = True
 
 async def publish_to_mqtt(data):
     logging.debug("In publish_to_mqtt function.")
@@ -127,12 +141,15 @@ async def get_device_info(device):
     )
 
 async def main():
+
     Path('data').mkdir(parents=True, exist_ok=True)
     logging.debug("Starting application main.")
     device = await authenticate_device()
     next_reauth_time = asyncio.get_event_loop().time() + REAUTH_INTERVAL
 
-    while True:
+    
+
+    while not is_cancelled:
         logging.debug("In loop start.")
         # Retrieve DeviceInfo object in a loop
         logging.info("Connect to device to get info.")
@@ -151,6 +168,9 @@ async def main():
 
         # Wait for the specified sleep interval before retrieving and publishing data again
         await asyncio.sleep(SLEEP_INTERVAL)
+
+        if is_cancelled:
+            break
 
 if __name__ == "__main__":
     asyncio.run(main())
