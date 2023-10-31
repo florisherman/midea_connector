@@ -147,8 +147,6 @@ async def main():
     device = await authenticate_device()
     next_reauth_time = asyncio.get_event_loop().time() + REAUTH_INTERVAL
 
-    
-
     while not is_cancelled:
         logging.debug("In loop start.")
         # Retrieve DeviceInfo object in a loop
