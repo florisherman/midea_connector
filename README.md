@@ -43,10 +43,6 @@ The application will authenticate with the air conditioner device, retrieve its 
 
 The application provides logging for different levels of information (DEBUG, INFO, ERROR). You can adjust the log level by setting the **LOG_LEVEL** environment variable.
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
 ## Acknowledgments
 
 - This project uses the library of  https://github.com/mac-zhou/midea-msmart
