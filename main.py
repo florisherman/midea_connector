@@ -27,7 +27,7 @@ logging.basicConfig(level=LOG_LEVEL, format='%(asctime)s - %(levelname)s - %(mes
 
 # Read variables from environment variables
 DEVICE_IP = os.environ.get("DEVICE_IP", "192.168.1.15")
-CONFIG_PATH = os.environ.get("CONFIG_PATH", "data/device.json")
+CONFIG_PATH = os.environ.get("CONFIG_PATH", "./data/device.json")
 
 # MQTT broker settings (provide default values if environment variables are not set)
 MQTT_BROKER = os.environ.get("MQTT_BROKER", "192.168.1.51")
@@ -144,7 +144,7 @@ async def get_device_info(device):
     )
 
 async def main():
-    Path('data').mkdir(parents=True, exist_ok=True)
+    Path('./data').mkdir(parents=True, exist_ok=True)
     logging.debug("Starting application main.")
     device = await authenticate_device()
     next_reauth_time = asyncio.get_event_loop().time() + REAUTH_INTERVAL
