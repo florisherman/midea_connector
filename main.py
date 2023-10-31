@@ -105,6 +105,7 @@ async def read_config():
 async def get_device():
     logging.debug("In get_device function.")
     device = await Discover.discover_single(DEVICE_IP)
+    logging.info("discover_single device to get token.")
     if device.id:
         await write_config(device)
     else:
