@@ -49,5 +49,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Acknowledgments
 
-- This project uses the library of  https://github.com/mac-zhou/midea-msmart
-- checkout the author for more of his work  https://github.com/mill1000/midea-msmart
+- This project uses the library of https://github.com/mill1000/midea-msmart
