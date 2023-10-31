@@ -83,7 +83,6 @@ async def write_config(device):
     except Exception as e:
         logging.error(f"Error writing file: {str(e)}")
 
-
 async def read_config():
     logging.debug("In read_config function.")
     if os.path.exists(CONFIG_PATH):
